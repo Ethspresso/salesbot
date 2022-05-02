@@ -102,4 +102,4 @@ These metrics record the number of API calls made to each marketplace for each c
 
 ## Questions
 
-You can reach me on https://twitter.com/ethspresso 
+You can reach me on Twitter at https://twitter.com/ethspresso 
