@@ -16,6 +16,14 @@ To use this bot, you need the following:
 
 It is recommended to launch the bot using something like Docker or SystemD to ensure it can run 24/7 without depending on an open shell. You can of course try it out in a shell first and even use `screen`. The bot does not fork to the background or anything, it's just a forever-running while loop in a Python script.
 
+## Quick start guide
+
+1. Clone the Git repo
+2. `pipenv install`
+3. Copy the .env template (below) into `.env`
+4. Add your OpenSea API key and Discord webhook URL in `.env`
+5. Add one or more Opensea collection slugs using `./collection-admin.py -a`
+6. Launch the bot with `python3 salesbot.py`
 
 ## Python Requirements
 
@@ -75,6 +83,12 @@ SQLITE3_DB="salesbot.db"
 PROMETHEUS_METRIC_PORT="9110"
 ```
 
+## Collection management
+
+OpenSea collections can be added and removed from the list of watched collections using `collection-admin.py`. Run the script with `-h` to see the arguments it supports. You can add and remove collections while the bot is running, it will automatically pick up on changes. No need to restart the bot.
+
+The collections are added as "collection slugs", which is the last part of the collection URL. So for example for https://opensea.io/collection/exploding-stars-vol2 the collection slug is `exploding-stars-vol2`. That's the name you need to add using `collection-admin.py`.
+
 ## Metrics and monitoring
 
 Prometheus metrics are exposed on the configured port number. A simple health check to ensure the bot is running at all times is to monitor that this port is open.
@@ -86,3 +100,6 @@ The metrics exposed by the bot are at least the following:
 These metrics record the number of API calls made to each marketplace for each collection, and how many events (sales) have been fetched by the bot so far.
 
 
+## Questions
+
+You can reach me on https://twitter.com/ethspresso 
