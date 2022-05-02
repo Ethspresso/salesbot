@@ -15,13 +15,26 @@ from collections import defaultdict
 from opensea_utils import get_new_events, EVENT_TYPE_SALE
 
 
-def get_collection_slugs(sqlite3_db):
-    """Query database for collections to check and return list of collection slugs"""
-    conn = sqlite3.connect(sqlite3_db)
+def query(conn, query):
+    """Perform query against an existing SQLite3 connection and return results. Commit changes in case any changes were made.
+
+    :param conn: SQLite3 connection object
+    :param query: Query string to execute
+    :return: List of tuples returned by SQLite3. List might be empty.
+    """
     c = conn.cursor()
-    c.execute("SELECT collection_slug FROM collections")
-    collection_slugs = [row[0] for row in c.fetchall()]
+    c.execute(query)
+    conn.commit()
+    result = c.fetchall()
+    c.close()
+    return result
+
+
+def get_collection_slugs(sqlite3_db):
+    conn = sqlite3.connect(sqlite3_db)
+    res = query(conn, "SELECT collection_slug FROM collections")
     conn.close()
+    collection_slugs = [row[0] for row in res]
     return collection_slugs
 
 
