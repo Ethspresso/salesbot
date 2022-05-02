@@ -14,6 +14,7 @@ from collections import defaultdict
 
 from opensea_utils import get_new_events, EVENT_TYPE_SALE
 
+
 def get_collection_slugs(sqlite3_db):
     """Query database for collections to check and return list of collection slugs"""
     conn = sqlite3.connect(sqlite3_db)
@@ -22,6 +23,7 @@ def get_collection_slugs(sqlite3_db):
     collection_slugs = [row[0] for row in c.fetchall()]
     conn.close()
     return collection_slugs
+
 
 def main(opensea_api_key, webhook_url, sqlite3_db, check_interval):
     webhook = discord.Webhook.from_url(
